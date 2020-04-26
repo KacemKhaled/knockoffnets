@@ -8,6 +8,7 @@ from knockoff.datasets.imagenet1k import ImageNet1k
 from knockoff.datasets.indoor67 import Indoor67
 from knockoff.datasets.mnistlike import MNIST, KMNIST, EMNIST, EMNISTLetters, FashionMNIST
 from knockoff.datasets.tinyimagenet200 import TinyImageNet200
+from knockoff.datasets.openimages import OpenImages
 
 # Create a mapping of dataset -> dataset_type
 # This is helpful to determine which (a) family of model needs to be loaded e.g., imagenet and
@@ -32,6 +33,9 @@ dataset_to_modelfamily = {
     'Indoor67': 'imagenet',
     'Diabetic5': 'imagenet',
     'ImageNet1k': 'imagenet',
+
+    # OpenImages
+    'OpenImages': 'openimages',
 }
 
 # Transforms
@@ -63,6 +67,23 @@ modelfamily_to_transforms = {
     },
 
     'imagenet': {
+        'train': transforms.Compose([
+            transforms.RandomResizedCrop(224),
+            transforms.RandomHorizontalFlip(),
+            transforms.ToTensor(),
+            transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                                 std=[0.229, 0.224, 0.225]),
+        ]),
+        'test': transforms.Compose([
+            transforms.Resize(256),
+            transforms.CenterCrop(224),
+            transforms.ToTensor(),
+            transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                                 std=[0.229, 0.224, 0.225]),
+        ])
+    },
+
+    'openimages': {
         'train': transforms.Compose([
             transforms.RandomResizedCrop(224),
             transforms.RandomHorizontalFlip(),

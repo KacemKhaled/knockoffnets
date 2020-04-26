@@ -1,3 +1,5 @@
+Project INF8225: Here is the edited verions of the Readme to make it work.
+_______________
 # Knockoff Nets: Stealing Functionality of Black-Box Models, CVPR '19
 
 **Tribhuvanesh Orekondy, Bernt Schiele Mario Fritz**
@@ -30,15 +32,16 @@ $ pip install -r requirements.txt       # pip
 
 ### Datasets
 
-You will need six datasets to perform all experiments in the paper, all extracted into the `data/` directory.
+You will need six datasets to perform all experiments in the paper, all extracted into the `datasets/` directory.
  * Victim datasets
-   * Caltech256 ([Link](http://www.vision.caltech.edu/Image_Datasets/Caltech256/). Images in `data/256_ObjectCategories/<classname>/*.jpg`)
-   * CUB-200-2011 ([Link](http://www.vision.caltech.edu/visipedia/CUB-200-2011.html). Images in `data/CUB_200_2011/images/<classname>/*.jpg`)
-   * Indoor Scenes ([Link](http://web.mit.edu/torralba/www/indoor.html). Images in `data/indoor/Images/<classname>/*.jpg`)
-   * Diabetic Retinopathy ([Link](https://www.kaggle.com/c/diabetic-retinopathy-detection). Images in `data/diabetic_retinopathy/training_imgs/<classname>/*.jpg`)
+   * Caltech256 ([Link](http://www.vision.caltech.edu/Image_Datasets/Caltech256/). Images in `datasets/256_ObjectCategories/<classname>/*.jpg`)
+   * CUB-200-2011 ([Link](http://www.vision.caltech.edu/visipedia/CUB-200-2011.html). Images in `datasets/CUB_200_2011/images/<classname>/*.jpg`)
+   * Indoor Scenes ([Link](http://web.mit.edu/torralba/www/indoor.html). Images in `datasets/indoor/Images/<classname>/*.jpg`)
+   * Diabetic Retinopathy ([Link](https://www.kaggle.com/c/diabetic-retinopathy-detection). Images in `datasets/diabetic_retinopathy/training_imgs/<classname>/*.jpg`)
  * Adversarial datasets
-   * ImageNet ILSVRC 2012 ([Link](http://image-net.org/download-images). Images in `data/ILSVRC2012/training_imgs/<classname>/*.jpg`)
-   * OpenImages ([Link](https://storage.googleapis.com/openimages/web/index.html). Images in `data/openimages/<classname>/*.jpg`)
+   * ImageNet ILSVRC 2012 ([Link](http://image-net.org/download-images). Images in `datasets/ILSVRC2012/training_imgs/<classname>/*.jpg`). 
+   This dataset is not publicly available and needs a permission from the organisation to download it which may take weeks to process.
+   * OpenImages ([Link](https://storage.googleapis.com/openimages/web/index.html). Images in `datasets/openimages/<classname>/*.jpg`)
 
 ## Attack: Overview
 
@@ -63,16 +66,16 @@ Zip files (containing resnet-34 pytorch checkpoint `.pth.tar`, hyperparameters a
  
 ```bash
 # Format:
-$ python knockoff/victim/train.py DS_NAME ARCH -d DEV_ID \
+$ python -m "knockoff.victim.train" DS_NAME ARCH -d DEV_ID \
         -o models/victim/VIC_DIR -e EPOCHS --pretrained
 # where DS_NAME = {cubs200, caltech256, ...}, ARCH = {resnet18, vgg16, densenet161, ...}
 # if the machine contains multiple GPUs, DEV_ID specifies which GPU to use
 
 # More details:
-$ python knockoff/victim/train.py --help
+$ python -m "knockoff.victim.train" --help
 
 # Example (CUB-200):
-$ python knockoff/victim/train.py CUBS200 resnet34 -d 1 \
+$ python -m "knockoff.victim.train" CUBS200 resnet34 -d 1 \
         -o models/victim/cubs200-resnet34 -e 10 --log-interval 25 \
         --pretrained imagenet
 ```
@@ -85,21 +88,21 @@ We store the knockoff models and related data (e.g., transfer set, logs) under `
 
 ```bash
 # Format
-$ python knockoff/adversary/transfer.py random models/victim/VIC_DIR \
+$ python -m "knockoff.adversary.transfer" random models/victim/VIC_DIR \
         --out_dir models/adversary/ADV_DIR --budget BUDGET \
         --queryset QUERY_SET --batch_size 8 -d DEV_ID
-# where QUERY_SET = {ImageNet1k ,...}
+# where QUERY_SET = {ImageNet1k , OpenImages...}
 
 # More details
-$ python knockoff/adversary/transfer.py --help
+$ python -m "knockoff.adversary.transfer" --help
 
 # Examples (CUB-200):
 # Random
-$ python knockoff/adversary/transfer.py random models/victim/cubs200-resnet34 \
+$ python -m "knockoff.adversary.transfer" random models/victim/cubs200-resnet34 \
         --out_dir models/adversary/cubs200-resnet34-random --budget 80000 \
         --queryset ImageNet1k --batch_size 8 -d 2
 # Adaptive
-$ python knockoff/adversary/transfer.py adaptive models/victim/cubs200-resnet34 \
+$ python -m "knockoff.adversary.transfer" adaptive models/victim/cubs200-resnet34 \
         --out_dir models/adversary/cubs200-resnet34-random --budget 80000 \
         --queryset ImageNet1k --batch_size 8 -d 2
 ```
@@ -108,16 +111,16 @@ $ python knockoff/adversary/transfer.py adaptive models/victim/cubs200-resnet34 
 
 ```bash
 # Format:
-$ python knockoff/adversary/train.py models/adversary/ADV_DIR ARCH DS_NAME \
+$ python -m "knockoff.adversary.train" models/adversary/ADV_DIR ARCH DS_NAME \
         --budgets BUDGET1,BUDGET2,.. -d DEV_ID --pretrained --epochs EPOCHS \
         --lr LR
 # DS_NAME refers to the dataset used to train victim model; used only to evaluate on test set during training of knockoff
 
 # More details:
-$ python knockoff/adversary/train.py --help
+$ python -m "knockoff.adversary.train" --help
 
 # Example (CUB-200)
-$ python knockoff/adversary/train.py models/adversary/cubs200-resnet34-random \
+$ python -m "knockoff.adversary.train" models/adversary/cubs200-resnet34-random \
         resnet34 CUBS200 --budgets 60000 -d 0 --pretrained imagenet \
         --log-interval 100 --epochs 200 --lr 0.01 
 ```

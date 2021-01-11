@@ -1,4 +1,5 @@
-Project INF8225: Here is the edited verions of the Readme to make it work.
+Compute Canada Version working with requirements.txt
+Here is the edited verions of the Readme to make it work.
 _______________
 # Knockoff Nets: Stealing Functionality of Black-Box Models, CVPR '19
 

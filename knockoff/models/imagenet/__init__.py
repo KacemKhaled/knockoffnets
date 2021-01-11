@@ -1,7 +1,7 @@
 """Fallback to Cadene imagenet models (superset of torchvision models)
 Source: https://github.com/Cadene/pretrained-models.pytorch
 """
-
+'''
 from pretrainedmodels import fbresnet152
 from pretrainedmodels import cafferesnet101
 from pretrainedmodels import bninception
@@ -47,3 +47,4 @@ from pretrainedmodels import se_resnext50_32x4d
 from pretrainedmodels import se_resnext101_32x4d
 from pretrainedmodels import pnasnet5large
 from pretrainedmodels import polynet
+'''

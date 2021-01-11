@@ -35,7 +35,7 @@ class CIFAR100(TVCIFAR100):
         'md5': '7973b15100ade9c7d40fb424638fde48',
     }
 
-    def __init__(self, train=True, transform=None, target_transform=None, download=False):
+    def __init__(self, train=True, transform=None, target_transform=None, download=True):
         root = osp.join(cfg.DATASET_ROOT, 'cifar100')
         super().__init__(root, train, transform, target_transform, download)
 

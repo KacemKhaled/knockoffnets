@@ -27,8 +27,10 @@ class ImageNet1k(ImageFolder):
             ))
 
         # Initialize ImageFolder
-        super().__init__(root=osp.join(root, 'training_imgs'), transform=transform,
+        super().__init__(root=root, transform=transform,
                          target_transform=target_transform)
+        #super().__init__(root=osp.join(root, 'training_imgs'), transform=transform,
+        #                 target_transform=target_transform)
         self.root = root
 
         self.partition_to_idxs = self.get_partition_to_idxs()

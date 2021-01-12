@@ -22,8 +22,8 @@ cd ..
 
 
 # Prepare data
-mkdir $SLURM_TMPDIR/ILSVRC2012/training_imgs
-tar -xvf ~/scratch/kacem/datasets/ILSVRC2012/ILSVRC2012_img_train.tar -C $SLURM_TMPDIR/ILSVRC2012/training_imgs
+mkdir $SLURM_TMPDIR/ILSVRC2012
+tar -xvf ~/scratch/kacem/datasets/ILSVRC2012/ILSVRC2012_img_train.tar -C $SLURM_TMPDIR/ILSVRC2012
 
 cd $SLURM_TMPDIR/ILSVRC2012
 find . -name "*.tar" | while read NAME ; do mkdir -p "${NAME%.tar}"; tar -xvf "${NAME}" -C "${NAME%.tar}"; rm -f "${NAME}"; done

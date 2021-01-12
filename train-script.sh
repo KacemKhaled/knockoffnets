@@ -25,7 +25,7 @@ cd ..
 
 # Prepare data
 mkdir $SLURM_TMPDIR/datasets/ILSVRC2012
-tar xf ~/scratch/kacem/datasets/ILSVRC2012/ -C $SLURM_TMPDIR/datasets/ILSVRC2012
+tar xf ~/scratch/kacem/datasets/ILSVRC2012/ILSVRC2012_img_train.tar -C $SLURM_TMPDIR/datasets/ILSVRC2012
 cd $SLURM_TMPDIR/datasets/ILSVRC2012
 find . -name "*.tar" | while read NAME ; do mkdir -p "${NAME%.tar}"; tar -xvf "${NAME}" -C "${NAME%.tar}"; rm -f "${NAME}"; done
 
@@ -38,3 +38,9 @@ cd $SOURCEDIR
 
 python  -m "knockoff.victim.train"  FashionMNIST lenet -d 0 \
         -o $SOURCEDIR/models/victim/fashionmnist-lenet -e 10 --log-interval 25
+
+python -m "knockoff.adversary.transfer" random models/victim/cubs200-resnet34 \\
+        --out_dir models/adversary/cubs200-resnet34-random --budget 80000 \\
+        --queryset ImageNet1k --batch_size 8 -d 2
+
+#launch the script with: sbatch --gres=gpu:1 --cpus-per-task=6 --mem=32000M --time=0-05:00 train-script.sh

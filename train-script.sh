@@ -41,7 +41,11 @@ python  -m "knockoff.victim.train"  FashionMNIST lenet -d 0 \
         -o $SOURCEDIR/models/victim/fashionmnist-lenet -e 10 --log-interval 25
 
 python -m "knockoff.adversary.transfer" random $SOURCEDIR/models/victim/fashionmnist-lenet \\
-        --out_dir $SOURCEDIR/models/adversary/fashionmnist-lenet-random --budget 5000 \\
+        --out_dir $SOURCEDIR/models/adversary/fashionmnist-lenet-random --budget 20000 \\
         --queryset ImageNet1k --batch_size 8 -d 0
+
+python -m "knockoff.adversary.train" $SOURCEDIR/models/adversary/fashionmnist-lenet-random \\
+        resnet34 FashionMNIST --budgets 20000 -d 0 --pretrained imagenet \\
+        --log-interval 25 --epochs 10 --lr 0.01
 
 #launch the script with: sbatch --gres=gpu:1 --cpus-per-task=6 --mem=32000M --time=0-00:30 train-script.sh

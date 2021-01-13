@@ -21,12 +21,12 @@ python setup.py install
 
 
 # Prepare data
-#mkdir $SLURM_TMPDIR/ILSVRC2012
+mkdir $SLURM_TMPDIR/ILSVRC2012
 #tar -xvf ~/scratch/kacem/datasets/ILSVRC2012/ILSVRC2012_img_train.tar -C $SLURM_TMPDIR/ILSVRC2012
-#tar -xvf ~/scratch/kacem/datasets/ILSVRC2012/ILSVRC2012_img_train_t3.tar -C $SLURM_TMPDIR/ILSVRC2012
+tar -xvf ~/scratch/kacem/datasets/ILSVRC2012/ILSVRC2012_img_train_t3.tar -C $SLURM_TMPDIR/ILSVRC2012
 
-#cd $SLURM_TMPDIR/ILSVRC2012
-#find . -name "*.tar" | while read NAME ; do mkdir -p "${NAME%.tar}"; tar -xvf "${NAME}" -C "${NAME%.tar}"; rm -f "${NAME}"; done
+cd $SLURM_TMPDIR/ILSVRC2012
+find . -name "*.tar" | while read NAME ; do mkdir -p "${NAME%.tar}"; tar -xvf "${NAME}" -C "${NAME%.tar}"; rm -f "${NAME}"; done
 
 #mkdir $SLURM_TMPDIR/data
 #tar xf ~/projects/def-xxxx/data.tar -C $SLURM_TMPDIR/data
@@ -45,9 +45,9 @@ python -m "knockoff.adversary.transfer" random $SOURCEDIR/models/victim/cifar100
 
 printf  "\n\nend of adversary.transfer\n\n"
 
-#python -m "knockoff.adversary.train" $SOURCEDIR/models/adversary/cifar100-vgg16-random \
-#        resnet34 CIFAR100 --budgets 20000 -d 0 --pretrained imagenet \
-#        --log-interval 100 --epochs 20 --lr 0.01
+python -m "knockoff.adversary.train" $SOURCEDIR/models/adversary/cifar100-vgg16-random \
+        resnet34 CIFAR100 --budgets 20000 -d 0 --pretrained imagenet \
+        --log-interval 100 --epochs 20 --lr 0.01
 
 printf  "\n\nend of adversary.train\n\n"
 #launch the script with: sbatch --gres=gpu:1 --cpus-per-task=6 --mem=32000M --time=0-10:00 train-script.sh

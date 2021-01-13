@@ -40,7 +40,7 @@ cd $SOURCEDIR
 
 python -m "knockoff.adversary.transfer" random $SOURCEDIR/models/victim/fashionmnist-lenet \
         --out_dir $SOURCEDIR/models/adversary/fashionmnist-lenet-random --budget 1 \
-        --queryset ImageNet1k --batch_size 8 -d 0
+        --queryset ImageNet1k  ~/scratch/kacem/datasets/train3 --batch_size 8 -d 0
 
 python -m "knockoff.adversary.train" $SOURCEDIR/models/adversary/fashionmnist-lenet-random \
         resnet34 FashionMNIST --budgets 1 -d 0 --pretrained imagenet \

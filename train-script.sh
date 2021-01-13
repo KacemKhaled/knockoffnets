@@ -35,17 +35,17 @@ find . -name "*.tar" | while read NAME ; do mkdir -p "${NAME%.tar}"; tar -xvf "$
 # python $SOURCEDIR/train.py $SLURM_TMPDIR/data
 cd $SOURCEDIR
 
-python  -m "knockoff.victim.train"  CIFAR100 vgg16 -d 0 \
-        -o $SOURCEDIR/models/victim/cifar100-vgg16 -e 1 --log-interval 25
+python  -m "knockoff.victim.train"  CIFAR100 densenet -d 0 \
+        -o $SOURCEDIR/models/victim/cifar100-densenet -e 1 --log-interval 25
 printf  "\n\nend of victim.train\n\n"
 
-python -m "knockoff.adversary.transfer" random $SOURCEDIR/models/victim/cifar100-vgg16 \
-        --out_dir $SOURCEDIR/models/adversary/cifar100-vgg16-random --budget 20000 \
+python -m "knockoff.adversary.transfer" random $SOURCEDIR/models/victim/cifar100-densenet \
+        --out_dir $SOURCEDIR/models/adversary/cifar100-densenet-random --budget 10000 \
         --queryset ImageNet1k $SLURM_TMPDIR/ILSVRC2012 --batch_size 8 -d 0
 
 printf  "\n\nend of adversary.transfer\n\n"
 
-python -m "knockoff.adversary.train" $SOURCEDIR/models/adversary/cifar100-vgg16-random \
+python -m "knockoff.adversary.train" $SOURCEDIR/models/adversary/cifar100-densenet-random \
         resnet34 CIFAR100 --budgets 20000 -d 0 --pretrained imagenet \
         --log-interval 100 --epochs 20 --lr 0.01
 

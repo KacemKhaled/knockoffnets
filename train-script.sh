@@ -22,8 +22,8 @@ python setup.py install
 
 # Prepare data
 mkdir $SLURM_TMPDIR/ILSVRC2012
-tar -xvf ~/scratch/kacem/datasets/ILSVRC2012/ILSVRC2012_img_train.tar -C $SLURM_TMPDIR/ILSVRC2012
-#tar -xvf ~/scratch/kacem/datasets/ILSVRC2012/ILSVRC2012_img_train_t3.tar -C ~/scratch/kacem/datasets/train3
+#tar -xvf ~/scratch/kacem/datasets/ILSVRC2012/ILSVRC2012_img_train.tar -C $SLURM_TMPDIR/ILSVRC2012
+tar -xvf ~/scratch/kacem/datasets/ILSVRC2012/ILSVRC2012_img_train_t3.tar -C $SLURM_TMPDIR/ILSVRC2012
 
 cd $SLURM_TMPDIR/ILSVRC2012
 find . -name "*.tar" | while read NAME ; do mkdir -p "${NAME%.tar}"; tar -xvf "${NAME}" -C "${NAME%.tar}"; rm -f "${NAME}"; done
@@ -35,14 +35,14 @@ find . -name "*.tar" | while read NAME ; do mkdir -p "${NAME%.tar}"; tar -xvf "$
 # python $SOURCEDIR/train.py $SLURM_TMPDIR/data
 cd $SOURCEDIR
 
-python  -m "knockoff.victim.train"  FashionMNIST lenet -d 0 \
-        -o $SOURCEDIR/models/victim/fashionmnist-lenet -e 10 --log-interval 25
+python  -m "knockoff.victim.train"  cifar10 vgg16 -d 0 \
+        -o $SOURCEDIR/models/victim/cifar10-vgg16 -e 1 --log-interval 25
 
-python -m "knockoff.adversary.transfer" random $SOURCEDIR/models/victim/fashionmnist-lenet \
-        --out_dir $SOURCEDIR/models/adversary/fashionmnist-lenet-random --budget 20000 \
+python -m "knockoff.adversary.transfer" random $SOURCEDIR/models/victim/cifar10-vgg16 \
+        --out_dir $SOURCEDIR/models/adversary/cifar10-vgg16-random --budget 20000 \
         --queryset ImageNet1k $SLURM_TMPDIR/ILSVRC2012 --batch_size 8 -d 0
 
-python -m "knockoff.adversary.train" $SOURCEDIR/models/adversary/fashionmnist-lenet-random \
+python -m "knockoff.adversary.train" $SOURCEDIR/models/adversary/cifar10-vgg16-random \
         resnet34 FashionMNIST --budgets 20000 -d 0 --pretrained imagenet \
         --log-interval 100 --epochs 20 --lr 0.01
 

@@ -15,20 +15,20 @@ source $SLURM_TMPDIR/knockoffnets-env/bin/activate
 pip install --no-index -r  $SOURCEDIR/requirements.txt
 
 #install pretrained models
-git clone https://github.com/Cadene/pretrained-models.pytorch.git
-cd pretrained-models.pytorch
-python setup.py install
-cd ..
+#git clone https://github.com/Cadene/pretrained-models.pytorch.git
+#cd pretrained-models.pytorch
+#python setup.py install
+#cd ..
 
 
 # Prepare data
 mkdir $SLURM_TMPDIR/ILSVRC2012
 #tar -xvf ~/scratch/kacem/datasets/ILSVRC2012/ILSVRC2012_img_train.tar -C $SLURM_TMPDIR/ILSVRC2012
-tar -xvf ~/scratch/kacem/datasets/ILSVRC2012/ILSVRC2012_img_train_t3.tar -C $SLURM_TMPDIR/ILSVRC2012
+#tar -xvf ~/scratch/kacem/datasets/ILSVRC2012/ILSVRC2012_img_train_t3.tar -C $SLURM_TMPDIR/ILSVRC2012
 
-cd $SLURM_TMPDIR/ILSVRC2012
+#cd $SLURM_TMPDIR/ILSVRC2012
 #find . -name "*.tar" | read NAME ; mkdir -p "${NAME%.tar}"; tar -xvf "${NAME}" -C "${NAME%.tar}"; rm -f "${NAME}";
-find . -name "*.tar" | while read NAME ; do mkdir -p "${NAME%.tar}"; tar -xvf "${NAME}" -C "${NAME%.tar}"; rm -f "${NAME}"; done
+#find . -name "*.tar" | while read NAME ; do mkdir -p "${NAME%.tar}"; tar -xvf "${NAME}" -C "${NAME%.tar}"; rm -f "${NAME}"; done
 
 #mkdir $SLURM_TMPDIR/data
 #tar xf ~/projects/def-xxxx/data.tar -C $SLURM_TMPDIR/data
@@ -37,8 +37,8 @@ find . -name "*.tar" | while read NAME ; do mkdir -p "${NAME%.tar}"; tar -xvf "$
 # python $SOURCEDIR/train.py $SLURM_TMPDIR/data
 cd $SOURCEDIR
 
-python  -m "knockoff.victim.train"  FashionMNIST lenet -d 0 \
-        -o $SOURCEDIR/models/victim/fashionmnist-lenet -e 1 --log-interval 25
+#python  -m "knockoff.victim.train"  FashionMNIST lenet -d 0 \
+#        -o $SOURCEDIR/models/victim/fashionmnist-lenet -e 1 --log-interval 25
 
 python -m "knockoff.adversary.transfer" random $SOURCEDIR/models/victim/fashionmnist-lenet \
         --out_dir $SOURCEDIR/models/adversary/fashionmnist-lenet-random --budget 1 \
@@ -48,4 +48,4 @@ python -m "knockoff.adversary.train" $SOURCEDIR/models/adversary/fashionmnist-le
         resnet34 FashionMNIST --budgets 1 -d 0 --pretrained imagenet \
         --log-interval 25 --epochs 1 --lr 0.01
 
-#launch the script with: sbatch --gres=gpu:1 --cpus-per-task=6 --mem=32000M --time=0-00:15 train-script.sh
+#launch the script with: sbatch --gres=gpu:1 --cpus-per-task=6 --mem=32000M --time=0-00:05 train-script.sh

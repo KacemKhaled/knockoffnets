@@ -101,6 +101,8 @@ def main():
     parser.add_argument('--budget', metavar='N', type=int, help='Size of transfer set to construct',
                         required=True)
     parser.add_argument('--queryset', metavar='TYPE', type=str, help='Adversary\'s dataset (P_A(X))', required=True)
+    parser.add_argument('adversary_dataset_dir', metavar='PATH', type=str,
+                        help='Path to Adversary Dataset"')
     parser.add_argument('--batch_size', metavar='TYPE', type=int, help='Batch size of queries', default=8)
     # parser.add_argument('--topk', metavar='N', type=int, help='Use posteriors only from topk classes',
     #                     default=None)
@@ -127,13 +129,14 @@ def main():
         device = torch.device('cpu')
 
     # ----------- Set up queryset
+    dataset_path = params['adversary_dataset_dir'] #workaround
     queryset_name = params['queryset']
     valid_datasets = datasets.__dict__.keys()
     if queryset_name not in valid_datasets:
         raise ValueError('Dataset not found. Valid arguments = {}'.format(valid_datasets))
     modelfamily = datasets.dataset_to_modelfamily[queryset_name]
     transform = datasets.modelfamily_to_transforms[modelfamily]['test']
-    queryset = datasets.__dict__[queryset_name](train=True, transform=transform)
+    queryset = datasets.__dict__[queryset_name](dataset_path,train=True, transform=transform)
 
     # ----------- Initialize blackbox
     blackbox_dir = params['victim_model_dir']

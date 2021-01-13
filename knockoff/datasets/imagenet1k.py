@@ -18,8 +18,8 @@ __status__ = "Development"
 class ImageNet1k(ImageFolder):
     test_frac = 0.2
 
-    def __init__(self, train=True, transform=None, target_transform=None):
-        root = osp.join('~/scratch/kacem/datasets', 'train3') # hard coded path for compute canada node
+    def __init__(self,root=None, train=True, transform=None, target_transform=None):
+        #root = osp.join('~/scratch/kacem/datasets', 'train3') # hard coded path for compute canada node
         #root = osp.join(cfg.DATASET_ROOT, 'ILSVRC2012')
         if not osp.exists(root):
             raise ValueError('Dataset not found at {}. Please download it from {}.'.format(

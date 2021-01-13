@@ -21,8 +21,8 @@ python setup.py install
 
 
 # Prepare data
-#mkdir ~/scratch/kacem/datasets/train3
-#tar -xvf ~/scratch/kacem/datasets/ILSVRC2012/ILSVRC2012_img_train.tar -C $SLURM_TMPDIR/ILSVRC2012
+mkdir $SLURM_TMPDIR/ILSVRC2012
+tar -xvf ~/scratch/kacem/datasets/ILSVRC2012/ILSVRC2012_img_train.tar -C $SLURM_TMPDIR/ILSVRC2012
 #tar -xvf ~/scratch/kacem/datasets/ILSVRC2012/ILSVRC2012_img_train_t3.tar -C ~/scratch/kacem/datasets/train3
 
 #cd ~/scratch/kacem/datasets/train3
@@ -35,15 +35,15 @@ python setup.py install
 # python $SOURCEDIR/train.py $SLURM_TMPDIR/data
 cd $SOURCEDIR
 
-#python  -m "knockoff.victim.train"  FashionMNIST lenet -d 0 \
-#        -o $SOURCEDIR/models/victim/fashionmnist-lenet -e 1 --log-interval 25
+python  -m "knockoff.victim.train"  FashionMNIST lenet -d 0 \
+        -o $SOURCEDIR/models/victim/fashionmnist-lenet -e 10 --log-interval 25
 
 python -m "knockoff.adversary.transfer" random $SOURCEDIR/models/victim/fashionmnist-lenet \
-        --out_dir $SOURCEDIR/models/adversary/fashionmnist-lenet-random --budget 1 \
-        --queryset ImageNet1k  ~/scratch/kacem/datasets/train3 --batch_size 8 -d 0
+        --out_dir $SOURCEDIR/models/adversary/fashionmnist-lenet-random --budget 20000 \
+        --queryset ImageNet1k $SLURM_TMPDIR/ILSVRC2012 --batch_size 8 -d 0
 
 python -m "knockoff.adversary.train" $SOURCEDIR/models/adversary/fashionmnist-lenet-random \
-        resnet34 FashionMNIST --budgets 1 -d 0 --pretrained imagenet \
-        --log-interval 25 --epochs 1 --lr 0.01
+        resnet34 FashionMNIST --budgets 20000 -d 0 --pretrained imagenet \
+        --log-interval 100 --epochs 20 --lr 0.01
 
-#launch the script with: sbatch --gres=gpu:1 --cpus-per-task=6 --mem=32000M --time=0-00:05 train-script.sh
+#launch the script with: sbatch --gres=gpu:1 --cpus-per-task=6 --mem=32000M --time=0-10:00 train-script.sh

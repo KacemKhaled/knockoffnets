@@ -37,13 +37,17 @@ cd $SOURCEDIR
 
 python  -m "knockoff.victim.train"  cifar10 vgg16 -d 0 \
         -o $SOURCEDIR/models/victim/cifar10-vgg16 -e 1 --log-interval 25
+printf  "\n\nend of victim.train\n\n"
 
 python -m "knockoff.adversary.transfer" random $SOURCEDIR/models/victim/cifar10-vgg16 \
         --out_dir $SOURCEDIR/models/adversary/cifar10-vgg16-random --budget 20000 \
         --queryset ImageNet1k $SLURM_TMPDIR/ILSVRC2012 --batch_size 8 -d 0
 
-python -m "knockoff.adversary.train" $SOURCEDIR/models/adversary/cifar10-vgg16-random \
-        resnet34 FashionMNIST --budgets 20000 -d 0 --pretrained imagenet \
-        --log-interval 100 --epochs 20 --lr 0.01
+printf  "\n\nend of adversary.transfer\n\n"
 
+#python -m "knockoff.adversary.train" $SOURCEDIR/models/adversary/cifar10-vgg16-random \
+#        resnet34 FashionMNIST --budgets 20000 -d 0 --pretrained imagenet \
+#        --log-interval 100 --epochs 20 --lr 0.01
+
+printf  "\n\nend of adversary.train\n\n"
 #launch the script with: sbatch --gres=gpu:1 --cpus-per-task=6 --mem=32000M --time=0-10:00 train-script.sh

@@ -35,8 +35,8 @@ python setup.py install
 # python $SOURCEDIR/train.py $SLURM_TMPDIR/data
 cd $SOURCEDIR
 
-python  -m "knockoff.victim.train"  cifar10 vgg16 -d 0 \
-        -o $SOURCEDIR/models/victim/cifar10-vgg16 -e 1 --log-interval 25
+python  -m "knockoff.victim.train"  cifar100 vgg16 -d 0 \
+        -o $SOURCEDIR/models/victim/cifar100-vgg16 -e 1 --log-interval 25
 printf  "\n\nend of victim.train\n\n"
 
 python -m "knockoff.adversary.transfer" random $SOURCEDIR/models/victim/cifar10-vgg16 \

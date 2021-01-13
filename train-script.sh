@@ -26,7 +26,8 @@ mkdir $SLURM_TMPDIR/ILSVRC2012
 tar -xvf ~/scratch/kacem/datasets/ILSVRC2012/ILSVRC2012_img_train.tar -C $SLURM_TMPDIR/ILSVRC2012
 
 cd $SLURM_TMPDIR/ILSVRC2012
-find . -name "*.tar" | while read NAME ; do mkdir -p "${NAME%.tar}"; tar -xvf "${NAME}" -C "${NAME%.tar}"; rm -f "${NAME}"; done
+find . -name "*.tar" | read NAME ; mkdir -p "${NAME%.tar}"; tar -xvf "${NAME}" -C "${NAME%.tar}"; rm -f "${NAME}";
+#find . -name "*.tar" | while read NAME ; do mkdir -p "${NAME%.tar}"; tar -xvf "${NAME}" -C "${NAME%.tar}"; rm -f "${NAME}"; done
 
 #mkdir $SLURM_TMPDIR/data
 #tar xf ~/projects/def-xxxx/data.tar -C $SLURM_TMPDIR/data
@@ -36,14 +37,14 @@ find . -name "*.tar" | while read NAME ; do mkdir -p "${NAME%.tar}"; tar -xvf "$
 cd $SOURCEDIR
 
 python  -m "knockoff.victim.train"  FashionMNIST lenet -d 0 \
-        -o $SOURCEDIR/models/victim/fashionmnist-lenet -e 10 --log-interval 25
+        -o $SOURCEDIR/models/victim/fashionmnist-lenet -e 1 --log-interval 25
 
 python -m "knockoff.adversary.transfer" random $SOURCEDIR/models/victim/fashionmnist-lenet \
-        --out_dir $SOURCEDIR/models/adversary/fashionmnist-lenet-random --budget 20000 \
+        --out_dir $SOURCEDIR/models/adversary/fashionmnist-lenet-random --budget 1 \
         --queryset ImageNet1k --batch_size 8 -d 0
 
 python -m "knockoff.adversary.train" $SOURCEDIR/models/adversary/fashionmnist-lenet-random \
-        resnet34 FashionMNIST --budgets 20000 -d 0 --pretrained imagenet \
-        --log-interval 25 --epochs 10 --lr 0.01
+        resnet34 FashionMNIST --budgets 1 -d 0 --pretrained imagenet \
+        --log-interval 25 --epochs 1 --lr 0.01
 
 #launch the script with: sbatch --gres=gpu:1 --cpus-per-task=6 --mem=32000M --time=0-10:00 train-script.sh

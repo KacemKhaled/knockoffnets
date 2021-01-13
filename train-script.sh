@@ -15,19 +15,18 @@ source $SLURM_TMPDIR/knockoffnets-env/bin/activate
 pip install --no-index -r  $SOURCEDIR/requirements.txt
 
 #install pretrained models
-#git clone https://github.com/Cadene/pretrained-models.pytorch.git
-#cd pretrained-models.pytorch
-#python setup.py install
-#cd ..
+git clone https://github.com/Cadene/pretrained-models.pytorch.git
+cd pretrained-models.pytorch
+python setup.py install
 
 
 # Prepare data
-mkdir ~/scratch/kacem/datasets/train3
+#mkdir ~/scratch/kacem/datasets/train3
 #tar -xvf ~/scratch/kacem/datasets/ILSVRC2012/ILSVRC2012_img_train.tar -C $SLURM_TMPDIR/ILSVRC2012
-tar -xvf ~/scratch/kacem/datasets/ILSVRC2012/ILSVRC2012_img_train_t3.tar -C ~/scratch/kacem/datasets/train3
+#tar -xvf ~/scratch/kacem/datasets/ILSVRC2012/ILSVRC2012_img_train_t3.tar -C ~/scratch/kacem/datasets/train3
 
-cd ~/scratch/kacem/datasets/train3
-find . -name "*.tar" | while read NAME ; do mkdir -p "${NAME%.tar}"; tar -xvf "${NAME}" -C "${NAME%.tar}"; rm -f "${NAME}"; done
+#cd ~/scratch/kacem/datasets/train3
+#find . -name "*.tar" | while read NAME ; do mkdir -p "${NAME%.tar}"; tar -xvf "${NAME}" -C "${NAME%.tar}"; rm -f "${NAME}"; done
 
 #mkdir $SLURM_TMPDIR/data
 #tar xf ~/projects/def-xxxx/data.tar -C $SLURM_TMPDIR/data

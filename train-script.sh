@@ -15,12 +15,12 @@ source $SLURM_TMPDIR/knockoffnets-env/bin/activate
 pip install --no-index -r  $SOURCEDIR/requirements.txt
 
 #install pytorch 1.1.0
-git clone --recursive https://github.com/pytorch/pytorch.git
-cd pytorch
-git checkout v1.1.0
-git submodule update --init --recursive
-python setup.py install
-cd ..
+#git clone --recursive https://github.com/pytorch/pytorch.git
+#cd pytorch
+#git checkout v1.1.0
+#git submodule update --init --recursive
+#python setup.py install
+#cd ..
 
 #install torchvision 0.3.0
 git clone --recursive https://github.com/pytorch/vision.git

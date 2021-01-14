@@ -14,8 +14,6 @@ virtualenv --no-download $SLURM_TMPDIR/knockoffnets-env
 source $SLURM_TMPDIR/knockoffnets-env/bin/activate
 pip install --no-index -r  $SOURCEDIR/requirements.txt
 
-pip install pyyaml
-
 #install pytorch 1.1.0
 git clone --recursive https://github.com/pytorch/pytorch.git
 cd pytorch

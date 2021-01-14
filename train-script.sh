@@ -14,6 +14,13 @@ virtualenv --no-download $SLURM_TMPDIR/knockoffnets-env
 source $SLURM_TMPDIR/knockoffnets-env/bin/activate
 pip install --no-index -r  $SOURCEDIR/requirements.txt
 
+#install pytorch 1.1.0
+git clone https://github.com/pytorch/pytorch.git
+cd pytorch
+git checkout v1.1.0
+python setup.py install
+cd ..
+
 #install torchvision 0.3.0
 git clone https://github.com/pytorch/vision.git
 cd vision
@@ -57,4 +64,4 @@ python -m "knockoff.adversary.train" $SOURCEDIR/models/adversary/cifar100-densen
         --log-interval 100 --epochs 20 --lr 0.01
 
 printf  "\n\nend of adversary.train\n\n"
-#launch the script with: sbatch --gres=gpu:1 --cpus-per-task=6 --mem=32000M --time=0-10:00 train-script.sh
+#launch the script with: sbatch --gres=gpu:1 --cpus-per-task=6 --mem=32000M --time=0-00:05 train-script.sh

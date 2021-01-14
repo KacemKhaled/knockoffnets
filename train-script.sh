@@ -4,7 +4,8 @@
 #SBATCH --mem=32000M       # Memory proportional to GPUs: 32000 Cedar, 47000 Béluga, 64000 Graham.
 #SBATCH --time=0-30:00     # DD-HH:MM:SS
 
-module load python/3.6 cuda/10.0 cudnn
+module load python/3.6 cuda/10.0
+module spider cudnn/7.6
 
 SOURCEDIR=~/projects/def-gnico/kacemkh/knockoffnets-old
 

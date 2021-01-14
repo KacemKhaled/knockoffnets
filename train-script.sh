@@ -14,6 +14,8 @@ virtualenv --no-download $SLURM_TMPDIR/knockoffnets-env
 source $SLURM_TMPDIR/knockoffnets-env/bin/activate
 pip install --no-index -r  $SOURCEDIR/requirements.txt
 
+pip install pyyaml
+
 #install pytorch 1.1.0
 git clone --recursive https://github.com/pytorch/pytorch.git
 cd pytorch
@@ -65,4 +67,4 @@ python -m "knockoff.adversary.train" $SOURCEDIR/models/adversary/cifar100-densen
         --log-interval 100 --epochs 20 --lr 0.01
 
 printf  "\n\nend of adversary.train\n\n"
-#launch the script with: sbatch --gres=gpu:1 --cpus-per-task=6 --mem=32000M --time=0-00:05 train-script.sh
+#launch the script with: sbatch --gres=gpu:1 --cpus-per-task=6 --mem=32000M --time=0-10:00 train-script.sh

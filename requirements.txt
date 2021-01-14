@@ -3,6 +3,7 @@ certifi==2019.6.16
 #readline
 setuptools==41.0.1
 #tk
+pyyaml
 wheel==0.33.4
 munch==2.3.2
 numpy==1.16.3

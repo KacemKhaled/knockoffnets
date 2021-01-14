@@ -4,7 +4,7 @@
 #SBATCH --mem=32000M       # Memory proportional to GPUs: 32000 Cedar, 47000 Béluga, 64000 Graham.
 #SBATCH --time=0-30:00     # DD-HH:MM:SS
 
-module load python/3.6 cuda cudnn
+module load python/3.6 cuda/10.0 cudnn
 
 SOURCEDIR=~/projects/def-gnico/kacemkh/knockoffnets-old
 
@@ -65,4 +65,4 @@ python -m "knockoff.adversary.train" $SOURCEDIR/models/adversary/cifar100-densen
         --log-interval 100 --epochs 20 --lr 0.01
 
 printf  "\n\nend of adversary.train\n\n"
-#launch the script with: sbatch --gres=gpu:1 --cpus-per-task=6 --mem=32000M --time=0-10:00 train-script.sh
+#launch the script with: sbatch --gres=gpu:1 --cpus-per-task=6 --mem=32000M --time=0-00:10 train-script.sh

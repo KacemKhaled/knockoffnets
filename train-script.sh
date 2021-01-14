@@ -4,7 +4,8 @@
 #SBATCH --mem=32000M       # Memory proportional to GPUs: 32000 Cedar, 47000 Béluga, 64000 Graham.
 #SBATCH --time=0-30:00     # DD-HH:MM:SS
 
-module load python/3.6 cuda/10.0
+module load python/3.6 cuda/10.0 nixpkgs/16.09  gcc/7.3.0
+nvcc -V
 module spider cudnn/7.6
 
 SOURCEDIR=~/projects/def-gnico/kacemkh/knockoffnets-old
@@ -24,6 +25,7 @@ pip install --no-index -r  $SOURCEDIR/requirements.txt
 #cd ..
 
 #install torchvision 0.3.0
+nvcc -V
 git clone --recursive https://github.com/pytorch/vision.git
 cd vision
 git checkout v0.3.0

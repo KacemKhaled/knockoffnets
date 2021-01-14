@@ -14,6 +14,13 @@ virtualenv --no-download $SLURM_TMPDIR/knockoffnets-env
 source $SLURM_TMPDIR/knockoffnets-env/bin/activate
 pip install --no-index -r  $SOURCEDIR/requirements.txt
 
+#install torchvision 0.3.0
+git clone https://github.com/pytorch/vision.git
+cd vision
+git checkout v0.3.0
+python setup.py install
+cd ..
+
 #install pretrained models
 git clone https://github.com/Cadene/pretrained-models.pytorch.git
 cd pretrained-models.pytorch

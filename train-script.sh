@@ -18,6 +18,7 @@ pip install --no-index -r  $SOURCEDIR/requirements.txt
 git clone --recursive https://github.com/pytorch/pytorch.git
 cd pytorch
 git checkout v1.1.0
+git submodule update --init --recursive
 python setup.py install
 cd ..
 

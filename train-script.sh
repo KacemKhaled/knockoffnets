@@ -5,6 +5,7 @@
 #SBATCH --time=0-30:00     # DD-HH:MM:SS
 
 module load python/3.6
+
 python -V
 
 module load cuda/10.0
@@ -25,24 +26,7 @@ virtualenv --no-download $SLURM_TMPDIR/knockoffnets-env
 source $SLURM_TMPDIR/knockoffnets-env/bin/activate
 pip install --no-index -r  $SOURCEDIR/requirements.txt
 
-#install pytorch 1.1.0
-#git clone --recursive https://github.com/pytorch/pytorch.git
-#cd pytorch
-#git checkout v1.1.0
-#git submodule update --init --recursive
-#python setup.py install
-#cd ..
-
-pip install https://download.pytorch.org/whl/cu100/torchvision-0.3.0-cp36-cp36m-linux_x86_64.whl
-
-
-#install torchvision 0.3.0
-#nvcc -V
-#git clone --recursive https://github.com/pytorch/vision.git
-#cd vision
-#git checkout v0.3.0
-#python setup.py install
-
+#pip install https://download.pytorch.org/whl/cu100/torchvision-0.3.0-cp36-cp36m-linux_x86_64.whl
 
 #install pretrained models
 git clone https://github.com/Cadene/pretrained-models.pytorch.git

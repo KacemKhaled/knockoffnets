@@ -24,9 +24,9 @@ SOURCEDIR=~/projects/def-gnico/kacemkh/knockoffnets-old
 #Prepare virtualenv
 virtualenv --no-download $SLURM_TMPDIR/knockoffnets-env
 source $SLURM_TMPDIR/knockoffnets-env/bin/activate
-pip install --no-index -r  $SOURCEDIR/requirements.txt
+pip3 install --no-index -r  $SOURCEDIR/requirements.txt
 
-pip install https://download.pytorch.org/whl/cu100/torchvision-0.3.0-cp36-cp36m-linux_x86_64.whl
+pip3 install https://download.pytorch.org/whl/cu100/torchvision-0.3.0-cp36-cp36m-linux_x86_64.whl
 
 #install pretrained models
 #git clone https://github.com/Cadene/pretrained-models.pytorch.git

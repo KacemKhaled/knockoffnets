@@ -4,8 +4,17 @@
 #SBATCH --mem=32000M       # Memory proportional to GPUs: 32000 Cedar, 47000 Béluga, 64000 Graham.
 #SBATCH --time=0-30:00     # DD-HH:MM:SS
 
-module load python/3.6 cuda/10.0 nixpkgs/16.09  gcc/7.3.0
+module load python/3.6
+python -V
+
+module load cuda/10.0
+
+module load nixpkgs/16.09
+
+module load gcc/7.3.0
+
 nvcc -V
+
 module spider cudnn/7.6
 
 SOURCEDIR=~/projects/def-gnico/kacemkh/knockoffnets-old
@@ -24,13 +33,16 @@ pip install --no-index -r  $SOURCEDIR/requirements.txt
 #python setup.py install
 #cd ..
 
+pip install https://download.pytorch.org/whl/cu100/torchvision-0.3.0-cp36-cp36m-linux_x86_64.whl
+
+
 #install torchvision 0.3.0
-nvcc -V
-git clone --recursive https://github.com/pytorch/vision.git
-cd vision
-git checkout v0.3.0
-python setup.py install
-cd ..
+#nvcc -V
+#git clone --recursive https://github.com/pytorch/vision.git
+#cd vision
+#git checkout v0.3.0
+#python setup.py install
+
 
 #install pretrained models
 git clone https://github.com/Cadene/pretrained-models.pytorch.git
